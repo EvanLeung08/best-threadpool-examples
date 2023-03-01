@@ -43,6 +43,8 @@ public class EnhancedIoThreadPoolDemo {
             new LinkedBlockingQueue<Runnable>(QUEUE_CAPACITY), namedThreadFactory, REJECTED_EXECUTION_HANDLER);
 
     public static void main(String[] args) {
+        System.out.println("核心线程数："+(int) BigDecimalUtils.divideEx((double) AVAILABLE_PROCESSORS, BigDecimalUtils.subtract(1, BLOCKAGE_COEFFICIENT), BigDecimalUtils.ROUND_UP));
+
         ThreadMXBean bean = ManagementFactory.getThreadMXBean();
         System.out.println("JVM线程总数:" + bean.getThreadCount());
         //处理业务方法
