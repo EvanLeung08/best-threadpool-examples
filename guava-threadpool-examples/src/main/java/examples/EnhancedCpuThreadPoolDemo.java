@@ -46,7 +46,7 @@ public class EnhancedCpuThreadPoolDemo {
         //处理业务方法
         long start = System.currentTimeMillis();
             for (int i = 0; i < 1000; i++) {
-            final int taskId = i;
+            final int n = i;
             try {
                 Future<Object> future = pool.submit(new Callable<Object>() {
                     @Override
@@ -54,7 +54,7 @@ public class EnhancedCpuThreadPoolDemo {
 
                         //模拟业务逻辑
                         //Thread.sleep(10);
-                        System.out.println("执行第" + taskId + "个任务");
+                        System.out.println("执行第" + n + "个任务");
                         return null;
                     }
                 });
@@ -70,7 +70,7 @@ public class EnhancedCpuThreadPoolDemo {
             }
             System.out.println("JVM线程总数为:" + bean.getThreadCount());
             long time = System.currentTimeMillis() - start;
-            System.out.println(taskId + "个线程，耗时：" + time);
+            System.out.println(n + "个线程，耗时：" + time);
         }
 
         try {
