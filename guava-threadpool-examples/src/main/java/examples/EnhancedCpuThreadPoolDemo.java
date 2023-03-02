@@ -13,42 +13,16 @@ import java.util.concurrent.*;
 public class EnhancedCpuThreadPoolDemo {
 
 
-    /**
-     * CPU逻辑核心数量
-     */
-    private static final int AVAILABLE_PROCESSORS = Runtime.getRuntime().availableProcessors();
-
-    /**
-     * IO阻塞系数
-     */
-    private static final double BLOCKAGE_COEFFICIENT = 0.9;
-
-    /**
-     * 任务队列长度
-     */
-    private static final int QUEUE_CAPACITY = 10;
-
-    /**
-     * 因为任务都不可以丢弃,如果线程池核心线程、任务队列、最大线程都处于满负载状态,由调用者线程直接调用
-     */
-    private static final RejectedExecutionHandler REJECTED_EXECUTION_HANDLER = new ThreadPoolExecutor.CallerRunsPolicy();
-
-    //设置名称
-    private static final ThreadFactory namedThreadFactory = new ThreadFactoryBuilder()
-            .setNameFormat("public-cpu-denseness-thead-pool").build();
-    private static final ExecutorService pool = new ThreadPoolExecutor(AVAILABLE_PROCESSORS * 2, 200,
-            0L, TimeUnit.MILLISECONDS,
-            new LinkedBlockingQueue<Runnable>(QUEUE_CAPACITY), namedThreadFactory, REJECTED_EXECUTION_HANDLER);
 
     public static void main(String[] args) {
         ThreadMXBean bean = ManagementFactory.getThreadMXBean();
         System.out.println("JVM线程总数:" + bean.getThreadCount());
         //处理业务方法
         long start = System.currentTimeMillis();
-            for (int i = 0; i < 1000; i++) {
+            for (int i = 0; i < 10000; i++) {
             final int n = i;
             try {
-                Future<Object> future = pool.submit(new Callable<Object>() {
+                Future<Object> future = AbstractCommonThreadPool.CPU_INTENSIVE_THREADPOOL().submit(new Callable<Object>() {
                     @Override
                     public Object call() throws Exception {
 
