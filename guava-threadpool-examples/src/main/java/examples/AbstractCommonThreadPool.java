@@ -42,6 +42,11 @@ public class AbstractCommonThreadPool {
             new LinkedBlockingQueue<Runnable>(QUEUE_CAPACITY), new ThreadFactoryBuilder()
             .setNameFormat("public-io-denseness-thead-pool").build(), REJECTED_EXECUTION_HANDLER);
 
+    private static final ExecutorService MONITOR_THREADPOOL = new ThreadPoolExecutor(0, 300,
+            60L, TimeUnit.SECONDS,
+            new LinkedBlockingQueue<Runnable>(QUEUE_CAPACITY), new ThreadFactoryBuilder()
+            .setNameFormat("public-monitor-thead-pool").build(), REJECTED_EXECUTION_HANDLER);
+
 
     public static ExecutorService IO_INTENSIVE_THREADPOOL() {
         return IO_INTENSIVE_THREADPOOL;
@@ -51,6 +56,11 @@ public class AbstractCommonThreadPool {
     public static ExecutorService CPU_INTENSIVE_THREADPOOL() {
         return CPU_INTENSIVE_THREADPOOL;
     }
+
+    public static ExecutorService MONITOR_THREADPOOL() {
+        return MONITOR_THREADPOOL;
+    }
+
 
 
 }
